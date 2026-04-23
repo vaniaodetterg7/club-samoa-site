@@ -787,7 +787,7 @@ textarea {
 
 .pricing-card-base {
   background: #020202;
-  border-radius: 24px 0 0 24px;
+  border-radius: 24px;
 }
 
 .pricing-card-highlight {
@@ -1001,6 +1001,7 @@ textarea {
   height: 100%;
   max-height: 280px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 20px;
   border: 1px solid rgba(247, 242, 241, 0.1);
 }
@@ -1136,5 +1137,27 @@ textarea {
   .pricing-card,
   .social-card {
     padding: 18px;
+  }
+
+  .featured-event-card {
+    grid-template-columns: 1fr;
+  }
+
+  .event-card {
+    align-items: stretch;
+  }
+
+  .event-poster {
+    height: auto;
+    max-height: none;
+    aspect-ratio: 4 / 5;
+    object-fit: contain;
+    background: #050505;
+    padding: 8px;
+  }
+
+  .event-card .button {
+    width: 100%;
+    justify-content: center;
   }
 }
