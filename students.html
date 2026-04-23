@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Club Samoa | Portal de Alumnos</title>
+    <meta
+      name="description"
+      content="Portal de alumnos de Club Samoa para uniformes y examenes de cambio de grado."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@600;700&family=Teko:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <img class="brand-logo" src="./images/logo-white.png" alt="Logo de Club Samoa" />
+          <div class="brand-wordmark">
+            <p class="brand-subtitle">ESCUELA DE ARTES MARCIALES</p>
+            <h1 class="brand-title">CLUB SAMOA</h1>
+          </div>
+        </div>
+        <div class="header-right">
+          <nav class="site-nav" aria-label="Principal">
+            <a href="./index.html">Inicio</a>
+            <a href="./index.html#horarios">Horarios</a>
+            <a href="./index.html#precios">Precios</a>
+            <div class="nav-dropdown">
+              <button
+                class="nav-dropdown-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="students-menu"
+              >
+                Alumnos <span class="dropdown-caret" aria-hidden="true">⌄</span>
+              </button>
+              <div class="nav-dropdown-menu" id="students-menu" hidden>
+                <a href="./students.html">Portal de alumnos</a>
+                <a href="./students.html#uniformes">Uniformes</a>
+                <a href="./students.html#examenes">Exámenes</a>
+              </div>
+            </div>
+            <a href="./index.html#torneos">Torneos</a>
+            <a href="./index.html#contacto">Contacto</a>
+          </nav>
+          <div class="header-actions">
+            <a
+              class="header-social"
+              href="https://www.instagram.com/club.samoa/"
+              target="_blank"
+              rel="noreferrer"
+              ><img class="social-icon" src="./icon-instagram.png" alt="" aria-hidden="true" />Instagram</a
+            >
+            <a
+              class="header-social"
+              href="https://www.facebook.com/profile.php?id=100064137453524&locale=es_LA"
+              target="_blank"
+              rel="noreferrer"
+              ><img class="social-icon" src="./icon-facebook.png" alt="" aria-hidden="true" />Facebook</a
+            >
+            <a
+              class="header-cta"
+              href="https://wa.me/528333110858"
+              target="_blank"
+              rel="noreferrer"
+              ><img class="social-icon" src="./icon-whatsapp.png" alt="" aria-hidden="true" />Contáctanos <span aria-hidden="true">→</span></a
+            >
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero hero-students">
+          <div class="hero-copy">
+            <p class="eyebrow">Portal de alumnos</p>
+            <h2>Gestión de uniformes y exámenes en un solo lugar.</h2>
+            <p class="hero-text">
+              Este espacio está diseñado para alumnos activos del club.
+              Gestiona uniformes y participa en exámenes de grado sin
+              interrupciones ni procesos externos.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary button-text-only" href="#uniformes"
+                >Ir a uniformes</a
+              >
+              <a class="button button-secondary button-text-only" href="#examenes"
+                >Ir a exámenes</a
+              >
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="hero-stat">
+              <span class="stat-label">Exámenes Lima Lama</span>
+              <strong>Se realizan aproximadamente cada 3 meses, según el grado del alumno.</strong>
+            </div>
+            <div class="hero-stat">
+              <span class="stat-label">Exámenes Kickboxing</span>
+              <strong>Se realizan aproximadamente cada 4 meses.</strong>
+            </div>
+            <div class="hero-stat">
+              <span class="stat-label">Uniformes</span>
+              <strong>Se trabajan únicamente sobre pedido.</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="dual-layout student-section" id="uniformes">
+          <div class="section-heading">
+            <h2 class="section-page-title">Uniformes</h2>
+            <img
+              class="section-feature-image"
+              src="./images/uniformes-no.png"
+              alt="Uniformes disponibles para alumnos Club Samoa"
+            />
+            <h3>Realiza tu pedido fácil</h3>
+            <p>
+              Completa el formulario y envía tu pedido por WhatsApp de forma clara y sin errores.
+            </p>
+          </div>
+          <form class="data-form" data-form-type="uniforme">
+            <label class="form-field">
+              <span class="field-label">Nombre del alumno <span class="required-mark">*</span></span>
+              <input type="text" name="nombre" placeholder="Nombre completo" required />
+              <span class="field-note">Usa el nombre del alumno tal como aparece en clase.</span>
+            </label>
+            <label class="form-field">
+              <span class="field-label">Talla <span class="required-mark">*</span></span>
+              <select name="talla" required>
+                <option value="">Selecciona una talla</option>
+                <option>XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+              </select>
+              <span class="field-note">Selecciona la talla del uniforme que necesitas pedir.</span>
+            </label>
+            <label class="form-field">
+              <span class="field-label">Cantidad <span class="required-mark">*</span></span>
+              <input type="number" name="cantidad" min="1" value="1" required />
+              <span class="field-note">Puedes pedir una o varias piezas en la misma solicitud.</span>
+            </label>
+            <label class="form-field">
+              <span class="field-label">Notas</span>
+              <textarea
+                name="notas"
+                rows="4"
+                placeholder="Color, cinturon, fecha deseada o comentario extra"
+              ></textarea>
+              <span class="field-note">Campo opcional para detalles extra del pedido.</span>
+            </label>
+            <button class="button button-primary" type="submit">
+              <img class="social-icon" src="./icon-whatsapp.png" alt="" aria-hidden="true" />Enviar pedido por WhatsApp
+            </button>
+          </form>
+        </section>
+
+        <section class="dual-layout student-section" id="examenes">
+          <div class="section-heading">
+            <h2 class="section-page-title">Exámenes</h2>
+            <img
+              class="section-feature-image"
+              src="./images/examen26.jpg"
+              alt="Exámenes de grado para alumnos Club Samoa"
+            />
+            <h3>Registro rápido para cambio de grado.</h3>
+            <p>
+              Si eres alumno actual, utiliza este formulario para enviar tu solicitud con toda la información necesaria para tu cambio de grado.
+            </p>
+          </div>
+          <form class="data-form" data-form-type="examen">
+            <label class="form-field">
+              <span class="field-label">Nombre del alumno <span class="required-mark">*</span></span>
+              <input type="text" name="nombre" placeholder="Nombre completo" required />
+              <span class="field-note">Escribe el nombre completo del alumno que presentara el examen.</span>
+            </label>
+            <label class="form-field">
+              <span class="field-label">Grado actual <span class="required-mark">*</span></span>
+              <select name="grado" required>
+                <option value="">Selecciona una opción</option>
+                <option>Cinta Naranja</option>
+                <option>Cinta Morada</option>
+                <option>Cinta Azul</option>
+                <option>Cinta Verde</option>
+                <option>Cinta Café I</option>
+                <option>Cinta Café II</option>
+                <option>Cinta Café III</option>
+                <option>Cinta Negra</option>
+              </select>
+              <span class="field-note">Indica el grado o cinta actual para validar el registro.</span>
+            </label>
+            <label class="form-field">
+              <span class="field-label">Proximo examen <span class="required-mark">*</span></span>
+              <select name="fecha" required>
+                <option value="">Selecciona una opción</option>
+                <option>Marzo</option>
+                <option>Abril (KICKBOXING)</option>
+                <option>Junio</option>
+                <option>Agosto (KICKBOXING)</option>
+                <option>Septiembre</option>
+                <option>Diciembre</option>
+                <option>Diciembre (KICKBOXING)</option>
+                <option>Ninguna</option>
+              </select>
+              <span class="field-note">Selecciona la fecha programada para el cambio de grado.</span>
+            </label>
+            <label class="form-field">
+              <span class="field-label">Observaciones</span>
+              <textarea
+                name="notas"
+                rows="4"
+                placeholder="Duda, comprobante pendiente o comentario"
+              ></textarea>
+              <span class="field-note">Campo opcional para dudas, pagos o comentarios.</span>
+            </label>
+            <button class="button button-primary" type="submit">
+              <img class="social-icon" src="./icon-whatsapp.png" alt="" aria-hidden="true" />Registrarme por WhatsApp
+            </button>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+  </html>
