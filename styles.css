@@ -131,6 +131,7 @@ textarea {
 }
 
 .site-nav {
+  position: relative;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
@@ -139,14 +140,49 @@ textarea {
   font-weight: 600;
   justify-content: flex-start;
   align-self: start;
+  padding: 16px 0 14px;
+}
+
+.site-nav::before,
+.site-nav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(247, 242, 241, 0.1);
+}
+
+.site-nav::before {
+  top: 0;
+}
+
+.site-nav::after {
+  bottom: 0;
 }
 
 .site-nav a {
+  position: relative;
   padding: 10px 14px;
   border-radius: 14px;
   transition:
     color 180ms ease,
     background 180ms ease;
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--surface);
+}
+
+.site-nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -14px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--surface);
 }
 
 .nav-dropdown {
@@ -1079,6 +1115,7 @@ textarea {
 
   .site-nav {
     gap: 6px;
+    padding: 14px 0 12px;
   }
 
   .site-nav a {
@@ -1150,10 +1187,11 @@ textarea {
   .event-poster {
     height: auto;
     max-height: none;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: auto;
     object-fit: contain;
-    background: #050505;
-    padding: 8px;
+    background: transparent;
+    padding: 0;
+    display: block;
   }
 
   .event-card .button {
