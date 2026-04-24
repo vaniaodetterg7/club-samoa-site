@@ -693,6 +693,11 @@ textarea {
   margin-top: 18px;
 }
 
+.schedule-image-cta {
+  display: flex;
+  justify-content: center;
+}
+
 .schedule-timeline {
   position: relative;
   display: grid;
