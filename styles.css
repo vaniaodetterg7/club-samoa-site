@@ -573,8 +573,11 @@ textarea {
 }
 
 .hero-registration-button {
-  width: 100%;
+  width: fit-content;
+  min-width: 260px;
   margin-top: 14px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-registration-note {
