@@ -39,7 +39,7 @@ const EXAMENES_HEADERS = [
 const UNIFORMES_STATUS = ["Nuevo", "Contactado", "Pedido confirmado", "Entregado", "Cancelado"];
 const EXAMENES_STATUS = ["Nuevo", "Validado", "Pago pendiente", "Pago recibido", "Aprobado para examen", "Cancelado"];
 const DISCIPLINAS_UNIFORMES = ["Lima Lama Kids", "Kickboxing", "Muay Thai", "MMA", "Jiu Jitsu", "Otra"];
-const PRODUCTOS = ["Rashguard", "Jersey", "Short MMA", "Short Kickboxing", "Licra (damas)"];
+const PRODUCTOS = ["Rashguard", "Jersey", "Short MMA", "Short Kickboxing", "Licra (damas)", "Karategi"];
 const TALLAS = ["XS", "S", "M", "L", "XL", "XXL", "Infantil 4", "Infantil 6", "Infantil 8", "Infantil 10", "Otra"];
 const DISCIPLINAS_EXAMENES = ["Lima Lama", "Kickboxing"];
 const GRADOS = [
@@ -348,14 +348,14 @@ function setupResumenUniformes_(sheet) {
   setSummaryWidths_(sheet);
   setKpis_(sheet, [
     ["A4", "B4", "Total registros", '=COUNTA(Registro!A5:A)', "#f3eeec"],
-    ["D4", "E4", "Nuevos", '=COUNTIF(Registro!C5:C,"Nuevo")', "#fff2cc"],
+    ["D4", "E4", "Nuevos", '=COUNTIF(Registro!C5:C;"Nuevo")', "#fff2cc"],
     ["G4", "H4", "Piezas", '=SUM(Registro!I5:I)', "#d9eaf7"],
-    ["A7", "B7", "Entregados", '=COUNTIF(Registro!C5:C,"Entregado")', "#d9ead3"],
-    ["D7", "E7", "Cancelados", '=COUNTIF(Registro!C5:C,"Cancelado")', "#f4cccc"],
+    ["A7", "B7", "Entregados", '=COUNTIF(Registro!C5:C;"Entregado")', "#d9ead3"],
+    ["D7", "E7", "Cancelados", '=COUNTIF(Registro!C5:C;"Cancelado")', "#f4cccc"],
     ["G7", "H7", "Pendientes", '=B4-B7-E7', "#f3eeec"],
   ]);
-  setMiniTable_(sheet, "A10:B15", [["Estado", "Registros"], ["Nuevo", '=COUNTIF(Registro!C5:C,A11)'], ["Contactado", '=COUNTIF(Registro!C5:C,A12)'], ["Pedido confirmado", '=COUNTIF(Registro!C5:C,A13)'], ["Entregado", '=COUNTIF(Registro!C5:C,A14)'], ["Cancelado", '=COUNTIF(Registro!C5:C,A15)']]);
-  setMiniTable_(sheet, "D10:E15", [["Producto", "Piezas"], ["Rashguard", '=SUMIF(Registro!G5:G,"*"&D11&"*",Registro!I5:I)'], ["Jersey", '=SUMIF(Registro!G5:G,"*"&D12&"*",Registro!I5:I)'], ["Short MMA", '=SUMIF(Registro!G5:G,"*"&D13&"*",Registro!I5:I)'], ["Short Kickboxing", '=SUMIF(Registro!G5:G,"*"&D14&"*",Registro!I5:I)'], ["Licra (damas)", '=SUMIF(Registro!G5:G,"*"&D15&"*",Registro!I5:I)']]);
+  setMiniTable_(sheet, "A10:B15", [["Estado", "Registros"], ["Nuevo", '=COUNTIF(Registro!C5:C;A11)'], ["Contactado", '=COUNTIF(Registro!C5:C;A12)'], ["Pedido confirmado", '=COUNTIF(Registro!C5:C;A13)'], ["Entregado", '=COUNTIF(Registro!C5:C;A14)'], ["Cancelado", '=COUNTIF(Registro!C5:C;A15)']]);
+  setMiniTable_(sheet, "D10:E16", [["Producto", "Piezas"], ["Rashguard", '=SUMIF(Registro!G5:G;"*"&D11&"*";Registro!I5:I)'], ["Jersey", '=SUMIF(Registro!G5:G;"*"&D12&"*";Registro!I5:I)'], ["Short MMA", '=SUMIF(Registro!G5:G;"*"&D13&"*";Registro!I5:I)'], ["Short Kickboxing", '=SUMIF(Registro!G5:G;"*"&D14&"*";Registro!I5:I)'], ["Licra (damas)", '=SUMIF(Registro!G5:G;"*"&D15&"*";Registro!I5:I)'], ["Karategi", '=SUMIF(Registro!G5:G;"*"&D16&"*";Registro!I5:I)']]);
 }
 
 function setupResumenExamenes_(sheet) {
@@ -363,14 +363,14 @@ function setupResumenExamenes_(sheet) {
   setSummaryWidths_(sheet);
   setKpis_(sheet, [
     ["A4", "B4", "Total registros", '=COUNTA(Registro!A5:A)', "#f3eeec"],
-    ["D4", "E4", "Nuevos", '=COUNTIF(Registro!C5:C,"Nuevo")', "#fff2cc"],
-    ["G4", "H4", "Aprobados", '=COUNTIF(Registro!C5:C,"Aprobado para examen")', "#d9ead3"],
-    ["A7", "B7", "Pago pendiente", '=COUNTIF(Registro!C5:C,"Pago pendiente")', "#f4cccc"],
-    ["D7", "E7", "Pago recibido", '=COUNTIF(Registro!C5:C,"Pago recibido")', "#d9eaf7"],
-    ["G7", "H7", "Cancelados", '=COUNTIF(Registro!C5:C,"Cancelado")', "#f3eeec"],
+    ["D4", "E4", "Nuevos", '=COUNTIF(Registro!C5:C;"Nuevo")', "#fff2cc"],
+    ["G4", "H4", "Aprobados", '=COUNTIF(Registro!C5:C;"Aprobado para examen")', "#d9ead3"],
+    ["A7", "B7", "Pago pendiente", '=COUNTIF(Registro!C5:C;"Pago pendiente")', "#f4cccc"],
+    ["D7", "E7", "Pago recibido", '=COUNTIF(Registro!C5:C;"Pago recibido")', "#d9eaf7"],
+    ["G7", "H7", "Cancelados", '=COUNTIF(Registro!C5:C;"Cancelado")', "#f3eeec"],
   ]);
-  setMiniTable_(sheet, "A10:B16", [["Estado", "Registros"], ["Nuevo", '=COUNTIF(Registro!C5:C,A11)'], ["Validado", '=COUNTIF(Registro!C5:C,A12)'], ["Pago pendiente", '=COUNTIF(Registro!C5:C,A13)'], ["Pago recibido", '=COUNTIF(Registro!C5:C,A14)'], ["Aprobado para examen", '=COUNTIF(Registro!C5:C,A15)'], ["Cancelado", '=COUNTIF(Registro!C5:C,A16)']]);
-  setMiniTable_(sheet, "D10:E18", [["Proximo examen", "Registros"], ["Marzo", '=COUNTIF(Registro!H5:H,D11)'], ["Abril (Kickboxing)", '=COUNTIF(Registro!H5:H,D12)'], ["Junio", '=COUNTIF(Registro!H5:H,D13)'], ["Agosto (Kickboxing)", '=COUNTIF(Registro!H5:H,D14)'], ["Septiembre", '=COUNTIF(Registro!H5:H,D15)'], ["Diciembre", '=COUNTIF(Registro!H5:H,D16)'], ["Diciembre (Kickboxing)", '=COUNTIF(Registro!H5:H,D17)'], ["Ninguna", '=COUNTIF(Registro!H5:H,D18)']]);
+  setMiniTable_(sheet, "A10:B16", [["Estado", "Registros"], ["Nuevo", '=COUNTIF(Registro!C5:C;A11)'], ["Validado", '=COUNTIF(Registro!C5:C;A12)'], ["Pago pendiente", '=COUNTIF(Registro!C5:C;A13)'], ["Pago recibido", '=COUNTIF(Registro!C5:C;A14)'], ["Aprobado para examen", '=COUNTIF(Registro!C5:C;A15)'], ["Cancelado", '=COUNTIF(Registro!C5:C;A16)']]);
+  setMiniTable_(sheet, "D10:E18", [["Proximo examen", "Registros"], ["Marzo", '=COUNTIF(Registro!H5:H;D11)'], ["Abril (Kickboxing)", '=COUNTIF(Registro!H5:H;D12)'], ["Junio", '=COUNTIF(Registro!H5:H;D13)'], ["Agosto (Kickboxing)", '=COUNTIF(Registro!H5:H;D14)'], ["Septiembre", '=COUNTIF(Registro!H5:H;D15)'], ["Diciembre", '=COUNTIF(Registro!H5:H;D16)'], ["Diciembre (Kickboxing)", '=COUNTIF(Registro!H5:H;D17)'], ["Ninguna", '=COUNTIF(Registro!H5:H;D18)']]);
 }
 
 function setupSummaryTitle_(sheet, title, subtitle) {
