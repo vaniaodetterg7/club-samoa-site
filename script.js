@@ -94,13 +94,45 @@ const setSubmitState = (button, isSubmitting) => {
   button.textContent = isSubmitting ? "Enviando..." : button.dataset.defaultLabel;
 };
 
+const validateCheckboxGroups = (form) => {
+  const groups = form.querySelectorAll("[data-required-checkbox-group]");
+  let isValid = true;
+
+  groups.forEach((group) => {
+    const checkboxes = group.querySelectorAll('input[type="checkbox"]');
+    const firstCheckbox = checkboxes[0];
+    const hasCheckedOption = Array.from(checkboxes).some((checkbox) => checkbox.checked);
+
+    if (!firstCheckbox) {
+      return;
+    }
+
+    firstCheckbox.setCustomValidity(hasCheckedOption ? "" : "Selecciona al menos una opción.");
+    isValid = isValid && hasCheckedOption;
+  });
+
+  return isValid;
+};
+
 const buildRegistrationPayload = (form) => {
   const formData = new FormData(form);
   const formType = form.getAttribute("data-form-type");
   const payload = new URLSearchParams();
+  const valuesByKey = new Map();
 
   formData.forEach((value, key) => {
-    payload.append(key, String(value).trim());
+    const cleanValue = String(value).trim();
+    if (!cleanValue) {
+      return;
+    }
+
+    const values = valuesByKey.get(key) || [];
+    values.push(cleanValue);
+    valuesByKey.set(key, values);
+  });
+
+  valuesByKey.forEach((values, key) => {
+    payload.set(key, values.join(", "));
   });
 
   payload.set("form_type", formType);
@@ -112,10 +144,17 @@ const buildRegistrationPayload = (form) => {
 };
 
 registrationForms.forEach((form) => {
+  form.querySelectorAll("[data-required-checkbox-group] input").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      validateCheckboxGroups(form);
+    });
+  });
+
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    if (!form.reportValidity()) {
+    const hasValidCheckboxGroups = validateCheckboxGroups(form);
+    if (!form.reportValidity() || !hasValidCheckboxGroups) {
       return;
     }
 

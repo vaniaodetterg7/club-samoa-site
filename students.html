@@ -177,16 +177,29 @@
             </label>
             <label class="form-field">
               <span class="field-label">Producto <span class="required-mark">*</span></span>
-              <select name="producto" required>
-                <option value="">Selecciona una opción</option>
-                <option>Uniforme completo</option>
-                <option>Playera</option>
-                <option>Short</option>
-                <option value="Cinturon">Cinturón</option>
-                <option>Guantes</option>
-                <option>Otro</option>
-              </select>
-              <span class="field-note">Selecciona qué pieza necesitas pedir.</span>
+              <span class="checkbox-list" role="group" aria-label="Producto" data-required-checkbox-group>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="producto" value="Rashguard" />
+                  <span>Rashguard</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="producto" value="Jersey" />
+                  <span>Jersey</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="producto" value="Short MMA" />
+                  <span>Short MMA</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="producto" value="Short Kickboxing" />
+                  <span>Short Kickboxing</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="producto" value="Licra (damas)" />
+                  <span>Licra (damas)</span>
+                </label>
+              </span>
+              <span class="field-note">Selecciona uno o varios productos para este pedido.</span>
             </label>
             <label class="form-field">
               <span class="field-label">Talla <span class="required-mark">*</span></span>

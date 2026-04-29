@@ -2,6 +2,8 @@ const CLUB_SAMOA = {
   uniformesProperty: "CLUB_SAMOA_UNIFORMES_SPREADSHEET_ID",
   examenesProperty: "CLUB_SAMOA_EXAMENES_SPREADSHEET_ID",
   notificationEmailProperty: "CLUB_SAMOA_NOTIFICATION_EMAIL",
+  defaultUniformesSpreadsheetId: "1ZiN8C63ssLsCMhiszuU1I_xXkuIgGzFswmLm0vdp8cU",
+  defaultExamenesSpreadsheetId: "1GTkg0CF-AJLX-It04hBneMWBOqN0tNGyZFoW029YtjY",
   fromName: "Club Samoa Registros",
 };
 
@@ -37,7 +39,7 @@ const EXAMENES_HEADERS = [
 const UNIFORMES_STATUS = ["Nuevo", "Contactado", "Pedido confirmado", "Entregado", "Cancelado"];
 const EXAMENES_STATUS = ["Nuevo", "Validado", "Pago pendiente", "Pago recibido", "Aprobado para examen", "Cancelado"];
 const DISCIPLINAS_UNIFORMES = ["Lima Lama Kids", "Kickboxing", "Muay Thai", "MMA", "Jiu Jitsu", "Otra"];
-const PRODUCTOS = ["Uniforme completo", "Playera", "Short", "Cinturon", "Guantes", "Otro"];
+const PRODUCTOS = ["Rashguard", "Jersey", "Short MMA", "Short Kickboxing", "Licra (damas)"];
 const TALLAS = ["XS", "S", "M", "L", "XL", "XXL", "Infantil 4", "Infantil 6", "Infantil 8", "Infantil 10", "Otra"];
 const DISCIPLINAS_EXAMENES = ["Lima Lama", "Kickboxing"];
 const GRADOS = [
@@ -63,6 +65,11 @@ const FECHAS_EXAMEN = [
   "Diciembre (Kickboxing)",
   "Ninguna",
 ];
+
+function setupClubSamoaWebsite() {
+  configureDataSheets();
+  setupClubSamoaRegistros();
+}
 
 function setupClubSamoaRegistros() {
   const properties = PropertiesService.getScriptProperties();
@@ -104,6 +111,12 @@ function configureNotificationEmail(email) {
     CLUB_SAMOA.notificationEmailProperty,
     String(email || "").trim(),
   );
+}
+
+function configureDataSheets() {
+  const properties = PropertiesService.getScriptProperties();
+  properties.setProperty(CLUB_SAMOA.uniformesProperty, CLUB_SAMOA.defaultUniformesSpreadsheetId);
+  properties.setProperty(CLUB_SAMOA.examenesProperty, CLUB_SAMOA.defaultExamenesSpreadsheetId);
 }
 
 function doGet() {
@@ -225,7 +238,7 @@ function setupUniformesWorkbook_(spreadsheet) {
     validations: [
       { col: 3, values: UNIFORMES_STATUS },
       { col: 6, values: DISCIPLINAS_UNIFORMES },
-      { col: 7, values: PRODUCTOS },
+      { col: 7, values: PRODUCTOS, allowInvalid: true },
       { col: 8, values: TALLAS },
     ],
   });
@@ -321,7 +334,7 @@ function setupRegistroSheet_(sheet, config) {
     sheet.getRange(5, validation.col, 996, 1).setDataValidation(
       SpreadsheetApp.newDataValidation()
         .requireValueInList(validation.values, true)
-        .setAllowInvalid(false)
+        .setAllowInvalid(Boolean(validation.allowInvalid))
         .build(),
     );
   });
@@ -345,7 +358,7 @@ function setupResumenUniformes_(sheet) {
     ["G7", "H7", "Pendientes", '=B4-B7-E7', "#f3eeec"],
   ]);
   setMiniTable_(sheet, "A10:B15", [["Estado", "Registros"], ["Nuevo", '=COUNTIF(Registro!C5:C,A11)'], ["Contactado", '=COUNTIF(Registro!C5:C,A12)'], ["Pedido confirmado", '=COUNTIF(Registro!C5:C,A13)'], ["Entregado", '=COUNTIF(Registro!C5:C,A14)'], ["Cancelado", '=COUNTIF(Registro!C5:C,A15)']]);
-  setMiniTable_(sheet, "D10:E16", [["Producto", "Piezas"], ["Uniforme completo", '=SUMIF(Registro!G5:G,D11,Registro!I5:I)'], ["Playera", '=SUMIF(Registro!G5:G,D12,Registro!I5:I)'], ["Short", '=SUMIF(Registro!G5:G,D13,Registro!I5:I)'], ["Cinturon", '=SUMIF(Registro!G5:G,D14,Registro!I5:I)'], ["Guantes", '=SUMIF(Registro!G5:G,D15,Registro!I5:I)'], ["Otro", '=SUMIF(Registro!G5:G,D16,Registro!I5:I)']]);
+  setMiniTable_(sheet, "D10:E15", [["Producto", "Piezas"], ["Rashguard", '=SUMIF(Registro!G5:G,"*"&D11&"*",Registro!I5:I)'], ["Jersey", '=SUMIF(Registro!G5:G,"*"&D12&"*",Registro!I5:I)'], ["Short MMA", '=SUMIF(Registro!G5:G,"*"&D13&"*",Registro!I5:I)'], ["Short Kickboxing", '=SUMIF(Registro!G5:G,"*"&D14&"*",Registro!I5:I)'], ["Licra (damas)", '=SUMIF(Registro!G5:G,"*"&D15&"*",Registro!I5:I)']]);
 }
 
 function setupResumenExamenes_(sheet) {
@@ -487,10 +500,11 @@ function deleteExtraSheets_(spreadsheet, keepNames) {
 
 function getOrCreateSpreadsheet_(propertyName, spreadsheetName, setupFn) {
   const properties = PropertiesService.getScriptProperties();
-  let id = properties.getProperty(propertyName);
+  let id = properties.getProperty(propertyName) || getDefaultSpreadsheetId_(propertyName);
   let spreadsheet;
   if (id) {
     spreadsheet = SpreadsheetApp.openById(id);
+    properties.setProperty(propertyName, spreadsheet.getId());
   } else {
     spreadsheet = SpreadsheetApp.create(spreadsheetName);
     properties.setProperty(propertyName, spreadsheet.getId());
@@ -500,11 +514,23 @@ function getOrCreateSpreadsheet_(propertyName, spreadsheetName, setupFn) {
 }
 
 function getSpreadsheetFromProperty_(propertyName) {
-  const id = PropertiesService.getScriptProperties().getProperty(propertyName);
+  const id =
+    PropertiesService.getScriptProperties().getProperty(propertyName) ||
+    getDefaultSpreadsheetId_(propertyName);
   if (!id) {
     throw new Error("Run setupClubSamoaRegistros() before connecting the website.");
   }
   return SpreadsheetApp.openById(id);
+}
+
+function getDefaultSpreadsheetId_(propertyName) {
+  if (propertyName === CLUB_SAMOA.uniformesProperty) {
+    return CLUB_SAMOA.defaultUniformesSpreadsheetId;
+  }
+  if (propertyName === CLUB_SAMOA.examenesProperty) {
+    return CLUB_SAMOA.defaultExamenesSpreadsheetId;
+  }
+  return "";
 }
 
 function readPayload_(e) {
