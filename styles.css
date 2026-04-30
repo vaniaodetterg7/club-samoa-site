@@ -1207,6 +1207,14 @@ textarea {
   border: 1px solid rgba(247, 242, 241, 0.1);
 }
 
+.event-poster--logo {
+  object-fit: contain;
+  object-position: center;
+  aspect-ratio: 3 / 1;
+  background: var(--surface);
+  padding: 18px;
+}
+
 .event-copy {
   display: grid;
   gap: 10px;
