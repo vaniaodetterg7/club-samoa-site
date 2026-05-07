@@ -30,11 +30,32 @@ body {
   margin: 0;
   font-family: "Inter", sans-serif;
   min-height: 100vh;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.84)),
-    url("./images/back2.png") center top / cover fixed,
-    #000000;
+  /* Solid fallback — sits behind #smoke-bg-canvas (z-index:-2) and
+     ::before darkening overlay (z-index:-1). */
+  background: #000000;
   color: var(--text);
+  position: relative;
+}
+
+/* Animated WebGL smoke canvas, mounted by smoke-background.js */
+#smoke-bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+  display: block;
+}
+
+/* Darkening overlay above the canvas so foreground text stays readable. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.78));
 }
 
 a {
